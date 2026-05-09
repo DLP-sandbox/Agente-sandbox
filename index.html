@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Club DLP — La comunidad donde inversores hispanohablantes aprenden a invertir en bolsa con criterio. Sin jerga. Sin promesas falsas.">
+    <meta property="og:title" content="Club DLP — Invierte en bolsa con criterio">
+    <meta property="og:description" content="Más de 70 inversores en español ya construyen su portafolio con método. Únete al Club DLP por $37/mes.">
+    <title>Club DLP — Invierte en bolsa con criterio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #07080f;
+            color: #F1F5F9;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        :root {
+            --bg:    #07080f;
+            --bg2:   #0c0f1a;
+            --bg3:   #111827;
+            --card:  rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.07);
+
+            --gold:        #D97706;
+            --gold-l:      #F59E0B;
+            --gold-bright: #FCD34D;
+            --gold-dim:    rgba(217,119,6,0.12);
+            --gold-glow:   rgba(217,119,6,0.22);
+            --gold-border: rgba(217,119,6,0.3);
+
+            --navy:        #1E3A5F;
+            --navy-dim:    rgba(30,58,95,0.25);
+            --navy-border: rgba(37,99,235,0.18);
+
+            --yes-color:   #22C55E;
+            --yes-dim:     rgba(34,197,94,0.1);
+            --yes-border:  rgba(34,197,94,0.25);
+            --no-color:    #EF4444;
+            --no-dim:      rgba(239,68,68,0.08);
+            --no-border:   rgba(239,68,68,0.2);
+
+            --text:  #F1F5F9;
+            --text2: #94A3B8;
+            --text3: #64748B;
+
+            --font-d: 'Bricolage Grotesque', sans-serif;
+            --ease:   all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: var(--gold-border); border-radius: 3px; }
+
+        h1,h2,h3,h4 { font-family: var(--font-d); line-height: 1.12; letter-spacing: -0.02em; color: var(--text); }
+        p { color: var(--text2); }
+        a { text-decoration: none; }
+
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+        section { padding: 80px 0; }
+
+        /* animated pill */
+        .label {
+            display: inline-flex; align-items: center; gap: 8px;
+            font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+            color: var(--gold-l); background: var(--gold-dim);
+            border: 1px solid var(--gold-border); padding: 6px 14px;
+            border-radius: 100px; margin-bottom: 20px;
+        }
+        .label::before {
+            content:''; width:6px; height:6px; border-radius:50%;
+            background: var(--gold-l); animation: blink 2s infinite; flex-shrink:0;
+        }
+        @keyframes blink { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.35;transform:scale(.75)} }
+
+        /* fade-in */
+        .fi { opacity:0; transform:translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+        .fi.in { opacity:1; transform:none; }
+        .d1{transition-delay:.08s} .d2{transition-delay:.16s}
+        .d3{transition-delay:.24s} .d4{transition-delay:.32s}
+        .d5{transition-delay:.40s} .d6{transition-delay:.48s}
+
+        /* buttons */
+        .btn {
+            display:inline-flex; align-items:center; gap:8px;
+            font-family:'Inter',sans-serif; font-weight:600;
+            padding:14px 28px; border-radius:100px; border:none; cursor:pointer;
+            transition: var(--ease); position:relative; overflow:hidden;
+        }
+        .btn::before {
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+            transition:left .5s;
+        }
+        .btn:hover::before { left:100%; }
+        .btn-gold { background:var(--gold); color:#fff; font-size:15px; }
+        .btn-gold:hover { background:var(--gold-l); transform:translateY(-2px); box-shadow:0 10px 28px var(--gold-glow); }
+        .btn-gold-lg { font-size:16px; padding:16px 34px; }
+        .btn-ghost { font-size:14px; color:var(--text2); background:none; padding:0; }
+        .btn-ghost:hover { color:var(--text); }
+
+        /* sec head */
+        .sec-head { text-align:center; max-width:600px; margin:0 auto 52px; }
+        .sec-head h2 { font-size:clamp(26px,3.8vw,42px); font-weight:700; margin-bottom:12px; }
+        .sec-head p  { font-size:16px; line-height:1.7; }
+
+        /* ── NAV ── */
+        nav {
+            position:fixed; top:0; left:0; right:0; z-index:100;
+            padding:18px 0; transition: var(--ease);
+        }
+        nav.scrolled {
+            background:rgba(7,8,15,.92); backdrop-filter:blur(20px);
+            border-bottom:1px solid var(--border); padding:12px 0;
+        }
+        .nav-inner { display:flex; align-items:center; justify-content:space-between; }
+        .nav-logo { display:flex; align-items:center; gap:10px; }
+        .nav-logo img { width:32px; height:32px; border-radius:7px; object-fit:cover; }
+        .nav-logo-text { display:flex; flex-direction:column; gap:1px; }
+        .nav-logo-text strong { font-family:var(--font-d); font-size:14px; color:var(--text); letter-spacing:-.01em; }
+        .nav-logo-text span { font-size:10px; color:var(--text3); }
+
+        /* ── HERO ── */
+        #hero {
+            padding-top:72px; padding-bottom:56px;
+            position:relative; overflow:hidden;
+        }
+        #hero::before {
+            content:''; position:absolute; inset:0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+            background-size:56px 56px;
+            mask-image:radial-gradient(ellipse at 50% 0%, black 20%, transparent 65%);
+        }
+        #hero::after {
+            content:''; position:absolute; top:-20%; left:50%; transform:translateX(-50%);
+            width:600px; height:380px;
+            background:radial-gradient(ellipse, rgba(30,58,95,.35) 0%, transparent 70%);
+            pointer-events:none;
+        }
+        .hero-inner { position:relative; z-index:1; max-width:680px; margin:0 auto; text-align:center; }
+
+        h1.hero-title {
+            font-size: clamp(28px, 5vw, 56px);
+            font-weight:800; margin-bottom:26px; line-height:1.07;
+        }
+        .hero-title .hi {
+            background:linear-gradient(130deg, var(--gold-l) 0%, var(--gold-bright) 100%);
+            -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+        }
+
+        /* VSL */
+        .vsl-wrap { margin:0 auto 24px; max-width:680px; }
+        .vsl-box {
+            position:relative; width:100%; padding-bottom:56.25%;
+            background:var(--bg2); border:1px solid var(--border);
+            border-radius:16px; overflow:hidden;
+        }
+        .vsl-box iframe { position:absolute; inset:0; width:100%; height:100%; border:none; }
+        .vsl-ph {
+            position:absolute; inset:0;
+            display:flex; flex-direction:column; align-items:center; justify-content:center;
+            gap:12px; background:var(--bg3);
+        }
+        .vsl-ph .play {
+            width:62px; height:62px; border-radius:50%;
+            background:var(--gold-dim); border:2px solid var(--gold-border);
+            display:flex; align-items:center; justify-content:center;
+            font-size:22px; cursor:pointer; transition:var(--ease); color:#fff;
+        }
+        .vsl-ph .play:hover { background:var(--gold); border-color:var(--gold); transform:scale(1.07); }
+        .vsl-ph span { font-size:12px; color:var(--text3); }
+
+        /* stats */
+        .hero-stats { display:flex; justify-content:center; margin:24px 0 28px; flex-wrap:wrap; }
+        .stat { padding:0 24px; text-align:center; }
+        .stat:first-child { padding-left:0; }
+        .stat:last-child  { padding-right:0; }
+        .stat + .stat { border-left:1px solid var(--border); }
+        .stat-n { font-family:var(--font-d); font-size:24px; font-weight:700; }
+        .stat-l { font-size:11px; color:var(--text3); margin-top:2px; }
+
+        .hero-actions { display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap; }
+
+        /* ── TICKER ── */
+        .ticker-wrap {
+            background:var(--bg2); border-top:1px solid var(--border);
+            border-bottom:1px solid var(--border); padding:12px 0;
+            overflow:hidden; position:relative;
+        }
+        .ticker-wrap::before,.ticker-wrap::after {
+            content:''; position:absolute; top:0; width:100px; height:100%; z-index:2;
+        }
+        .ticker-wrap::before { left:0; background:linear-gradient(90deg,var(--bg2),transparent); }
+        .ticker-wrap::after  { right:0; background:linear-gradient(-90deg,var(--bg2),transparent); }
+        .ticker-track { display:flex; animation:tick 30s linear infinite; width:max-content; }
+        .ticker-track:hover { animation-play-state:paused; }
+        @keyframes tick { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+        .ti { display:inline-flex; align-items:center; gap:6px; padding:0 20px; font-size:12px; font-weight:500; color:var(--text3); white-space:nowrap; }
+        .ti .tg { color:var(--gold-l); font-size:11px; }
+        .ti .sep { width:3px; height:3px; border-radius:50%; background:var(--gold); }
+
+        /* ── BENEFICIOS (checklist) ── */
+        #beneficios { background:var(--bg2); }
+
+        .ben-intro { text-align:center; margin-bottom:44px; }
+        .ben-intro h2 { font-size:clamp(24px,3.5vw,38px); font-weight:700; margin-bottom:10px; }
+        .ben-intro p  { font-size:15px; max-width:480px; margin:0 auto; }
+
+        .ben-list {
+            background:var(--bg3); border:1px solid var(--border);
+            border-radius:20px; overflow:hidden;
+            display:grid; grid-template-columns:repeat(2,1fr);
+        }
+
+        .ben-row {
+            display:flex; gap:16px; align-items:flex-start;
+            padding:22px 26px; border-bottom:1px solid var(--border);
+            transition:var(--ease);
+        }
+        /* right column items also need left border on desktop */
+        .ben-row:nth-child(odd)  { border-right:1px solid var(--border); }
+        /* last two rows — remove bottom border */
+        .ben-row:nth-last-child(-n+2):not(.ben-bonus-row) { border-bottom:none; }
+
+        .ben-row:hover { background:rgba(217,119,6,0.05); }
+
+        .ben-chk {
+            width:26px; height:26px; border-radius:50%; flex-shrink:0;
+            background:var(--gold-dim); border:1.5px solid var(--gold);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--gold-l); font-weight:800; font-size:12px; margin-top:1px;
+        }
+        .ben-row-txt h3 { font-size:14px; font-weight:700; color:var(--text); margin-bottom:4px; line-height:1.3; }
+        .ben-row-txt p  { font-size:12px; color:var(--text3); line-height:1.6; }
+
+        /* bonus row — spans full width */
+        .ben-bonus-row {
+            grid-column: 1/-1;
+            background:linear-gradient(135deg,rgba(217,119,6,.14),rgba(245,158,11,.05));
+            border-top:1px solid var(--gold-border) !important;
+            border-bottom:none; border-right:none !important;
+            padding:22px 28px; gap:18px; align-items:center;
+        }
+        .ben-bonus-row .ben-chk {
+            width:30px; height:30px; font-size:14px;
+            background:rgba(252,211,77,.12); border-color:var(--gold-bright); color:var(--gold-bright);
+        }
+        .ben-bonus-row h3 { font-size:15px; color:var(--gold-l); }
+        .ben-bonus-row p  { color:var(--text2); }
+
+        /* ── PARA QUIÉN ── */
+        #para-quien { }
+        .pq-grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:40px; }
+
+        .pq-card {
+            border-radius:18px; padding:28px 28px 30px;
+            border:1px solid var(--border);
+        }
+        .pq-yes { background:rgba(34,197,94,.04); border-color:var(--yes-border); }
+        .pq-no  { background:rgba(239,68,68,.04);  border-color:var(--no-border); }
+
+        .pq-pill {
+            display:inline-flex; align-items:center; gap:6px;
+            font-size:10px; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+            padding:5px 12px; border-radius:100px; margin-bottom:22px;
+        }
+        .pq-pill-yes { color:var(--yes-color); background:var(--yes-dim); border:1px solid var(--yes-border); }
+        .pq-pill-no  { color:var(--no-color);  background:var(--no-dim);  border:1px solid var(--no-border); }
+        .pq-pill::before { content:''; width:5px; height:5px; border-radius:50%; background:currentColor; }
+
+        .pq-list { list-style:none; display:flex; flex-direction:column; gap:14px; }
+        .pq-item { display:flex; gap:12px; align-items:flex-start; font-size:14px; line-height:1.55; color:var(--text2); }
+        .pq-ico {
+            width:22px; height:22px; border-radius:50%; flex-shrink:0;
+            display:flex; align-items:center; justify-content:center;
+            font-size:11px; font-weight:800; margin-top:1px;
+        }
+        .pq-ico-yes { background:var(--yes-dim); color:var(--yes-color); }
+        .pq-ico-no  { background:var(--no-dim);  color:var(--no-color); }
+
+        .pq-cta { text-align:center; }
+        .pq-cta p {
+            font-size:clamp(18px,2.5vw,26px); font-weight:700; font-family:var(--font-d);
+            color:var(--text); margin-bottom:24px;
+        }
+        .pq-cta .hi { color:var(--gold-l); }
+
+        /* ── JOSE ── */
+        #jose { background:var(--bg2); }
+        .jose-grid { display:grid; grid-template-columns:auto 1fr; gap:52px; align-items:center; }
+        .jose-img-wrap { position:relative; width:230px; flex-shrink:0; }
+        .jose-img {
+            width:230px; height:230px; object-fit:cover; object-position:center top;
+            border-radius:50%; display:block;
+            border:3px solid var(--gold); box-shadow:0 0 0 7px rgba(217,119,6,.1);
+        }
+        .jose-chip {
+            position:absolute; bottom:4px; right:-14px;
+            background:var(--bg); border:1px solid var(--border); border-radius:100px;
+            padding:6px 12px; font-size:11px; font-weight:600;
+            color:var(--gold-l); white-space:nowrap;
+        }
+        .jose-text h2 { font-size:clamp(24px,3vw,36px); font-weight:700; margin-bottom:14px; }
+        .jose-text p  { font-size:15px; line-height:1.85; margin-bottom:12px; }
+        .jose-text p strong { color:var(--text); }
+        .jose-handles { display:flex; gap:10px; margin-top:18px; flex-wrap:wrap; }
+        .handle {
+            font-size:12px; color:var(--text2); background:var(--card);
+            border:1px solid var(--border); padding:6px 14px; border-radius:100px;
+            transition:var(--ease);
+        }
+        .handle:hover { border-color:var(--gold); color:var(--gold-l); }
+
+        /* ── TESTIMONIOS ── */
+        #testimonios { }
+        .test-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; }
+        .test-card {
+            background:var(--bg2); border:1px solid var(--border);
+            border-radius:16px; padding:22px; transition:var(--ease);
+        }
+        .test-card:hover { border-color:var(--gold-border); transform:translateY(-3px); }
+        .test-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:14px; }
+        .test-author { display:flex; align-items:center; gap:10px; }
+        .test-avatar {
+            width:34px; height:34px; border-radius:50%;
+            background:var(--gold-dim); border:1px solid var(--gold-border);
+            display:flex; align-items:center; justify-content:center;
+            font-weight:700; font-size:12px; color:var(--gold-l); flex-shrink:0;
+        }
+        .test-author h4 { font-size:13px; font-weight:600; }
+        .test-stars { color:var(--gold-l); font-size:11px; letter-spacing:1px; }
+        .test-text { font-size:13px; line-height:1.75; color:var(--text2); }
+        .test-date { font-size:11px; color:var(--text3); margin-top:10px; }
+
+        /* ── PRECIO ── */
+        #precio { background:var(--bg2); }
+        .precio-head { text-align:center; margin-bottom:40px; }
+        .precio-head h2 {
+            font-size:clamp(26px,4vw,48px); font-weight:800; line-height:1.1;
+        }
+        .precio-head h2 .hi { color:var(--gold-l); }
+        .precio-head p { font-size:16px; color:var(--text2); margin-top:12px; }
+
+        .precio-card {
+            max-width:520px; margin:0 auto;
+            background:var(--bg3); border:1px solid var(--gold-border);
+            border-radius:24px; overflow:hidden; position:relative;
+        }
+        .precio-card::before {
+            content:''; position:absolute; top:0; left:0; right:0; height:1px;
+            background:linear-gradient(90deg,transparent,var(--gold),transparent);
+        }
+        .precio-img img {
+            width:100%; display:block; aspect-ratio:16/7; object-fit:cover; object-position:center;
+        }
+        .precio-body { padding:32px 32px 36px; text-align:center; }
+        .precio-tag {
+            display:inline-block; font-size:10px; font-weight:700;
+            letter-spacing:.1em; text-transform:uppercase;
+            color:var(--gold-l); background:var(--gold-dim);
+            border:1px solid var(--gold-border); padding:5px 14px;
+            border-radius:100px; margin-bottom:14px;
+        }
+        .precio-card h2 { font-size:clamp(20px,2.8vw,26px); font-weight:700; margin-bottom:4px; }
+        .amount {
+            font-family:var(--font-d); font-size:62px; font-weight:800;
+            color:var(--text); margin:16px 0 4px; line-height:1;
+        }
+        .amount sup { font-size:24px; vertical-align:top; margin-top:10px; }
+        .period { font-size:13px; color:var(--text3); margin-bottom:26px; }
+
+        .inc-list { text-align:left; margin-bottom:26px; }
+        .inc-list h4 {
+            font-size:10px; font-weight:700; text-transform:uppercase;
+            letter-spacing:.09em; color:var(--text3); margin-bottom:12px;
+        }
+        .inc-row { display:flex; align-items:flex-start; gap:12px; padding:9px 0; border-bottom:1px solid var(--border); }
+        .inc-row:last-child { border-bottom:none; }
+        .chk {
+            width:20px; height:20px; border-radius:50%;
+            background:var(--gold-dim); border:1px solid var(--gold-border);
+            display:flex; align-items:center; justify-content:center;
+            font-size:10px; flex-shrink:0; margin-top:1px; color:var(--gold-l);
+        }
+        .inc-row span { font-size:14px; color:var(--text2); }
+        .gold-txt { color:var(--gold-l); font-weight:500; }
+        .chk-star { background:rgba(252,211,77,.1); border-color:var(--gold-border); color:var(--gold-bright); }
+
+        .btn-cta-precio {
+            width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
+            font-family:'Inter',sans-serif; font-size:16px; font-weight:600;
+            color:#fff; background:var(--gold); border:none;
+            padding:16px 32px; border-radius:100px; cursor:pointer;
+            transition:var(--ease); position:relative; overflow:hidden;
+        }
+        .btn-cta-precio:hover { background:var(--gold-l); transform:translateY(-2px); box-shadow:0 14px 36px var(--gold-glow); }
+        .btn-cta-precio::before {
+            content:''; position:absolute; top:0; left:-100%; width:100%; height:100%;
+            background:linear-gradient(90deg,transparent,rgba(255,255,255,.12),transparent);
+            transition:left .5s;
+        }
+        .btn-cta-precio:hover::before { left:100%; }
+        .precio-note { font-size:12px; color:var(--text3); margin-top:12px; }
+
+        /* ── FAQ ── */
+        #faq { }
+        .faq-list { max-width:680px; margin:0 auto; }
+        .faq-item { border-bottom:1px solid var(--border); }
+        .faq-q {
+            width:100%; background:none; border:none;
+            display:flex; align-items:center; justify-content:space-between;
+            padding:20px 0; cursor:pointer; text-align:left; gap:16px;
+        }
+        .faq-q h3 { font-size:15px; font-weight:600; color:var(--text); font-family:var(--font-d); }
+        .faq-ic {
+            width:26px; height:26px; border-radius:50%;
+            background:var(--card); border:1px solid var(--border);
+            display:flex; align-items:center; justify-content:center;
+            color:var(--text3); flex-shrink:0; font-size:16px; transition:var(--ease);
+        }
+        .faq-item.open .faq-ic { background:var(--gold-dim); border-color:var(--gold-border); color:var(--gold-l); transform:rotate(45deg); }
+        .faq-ans { max-height:0; overflow:hidden; transition:max-height .38s ease, padding .28s ease; }
+        .faq-item.open .faq-ans { max-height:200px; padding-bottom:20px; }
+        .faq-ans p { font-size:14px; line-height:1.8; }
+
+        /* ── FOOTER CTA ── */
+        .ft-cta {
+            text-align:center; padding:80px 0;
+            background:linear-gradient(180deg,var(--bg2) 0%,var(--bg) 100%);
+            position:relative; overflow:hidden;
+        }
+        .ft-cta::before {
+            content:''; position:absolute; bottom:-40px; left:50%; transform:translateX(-50%);
+            width:500px; height:260px;
+            background:radial-gradient(ellipse,rgba(30,58,95,.4) 0%,transparent 70%);
+        }
+        .ft-cta h2 { font-size:clamp(24px,4vw,44px); font-weight:800; margin-bottom:14px; position:relative; }
+        .ft-cta p  { font-size:16px; margin-bottom:30px; position:relative; }
+        .text-gold { color:var(--gold-l); }
+
+        /* ── FOOTER ── */
+        footer { background:var(--bg); border-top:1px solid var(--border); padding:26px 0 0; }
+        .ft-inner { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; padding-bottom:20px; }
+        .ft-inner p { font-size:12px; color:var(--text3); }
+        .ft-links { display:flex; gap:20px; }
+        .ft-links a { font-size:12px; color:var(--text3); text-decoration:none; transition:var(--ease); }
+        .ft-links a:hover { color:var(--text); }
+
+        .ft-legal {
+            border-top:1px solid var(--border);
+            padding:20px 0 24px;
+        }
+        .ft-legal p {
+            font-size:10px; line-height:1.75; color:var(--text3);
+            max-width:900px; margin:0 auto; text-align:center;
+        }
+        .ft-legal p + p { margin-top:8px; }
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:680px) {
+            section { padding:60px 0; }
+
+            /* benefits: single column on mobile */
+            .ben-list { grid-template-columns:1fr; }
+            .ben-row:nth-child(odd) { border-right:none; }
+            .ben-row:nth-last-child(-n+2):not(.ben-bonus-row) { border-bottom:1px solid var(--border); }
+            .ben-row:last-child { border-bottom:none; }
+
+            /* para quién: stack on mobile */
+            .pq-grid { grid-template-columns:1fr; }
+
+            .test-grid { grid-template-columns:1fr; }
+            .jose-grid { grid-template-columns:1fr; gap:32px; justify-items:center; text-align:center; }
+            .jose-handles { justify-content:center; }
+            .jose-chip { right:0; bottom:-10px; }
+
+            .stat + .stat { padding-left:14px; }
+            .stat { padding:0 14px; }
+            .stat-n { font-size:20px; }
+
+            .ft-inner { flex-direction:column; text-align:center; }
+            .hero-actions { flex-direction:column; align-items:stretch; }
+            .hero-actions .btn { justify-content:center; }
+            .precio-body { padding:22px 18px 28px; }
+            .amount { font-size:52px; }
+        }
+        @media(max-width:380px) {
+            .stat { padding:0 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+    <div class="container">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo">
+                <img src="assets/IA (1).jpg" alt="Logo DLP">
+                <div class="nav-logo-text">
+                    <strong>Club DLP</strong>
+                    <span>Diario Largo Plazo</span>
+                </div>
+            </a>
+            <a href="https://whop.com/diariolargoplazo/" class="btn btn-gold" target="_blank" rel="noopener">
+                Obtener acceso
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+    <div class="container">
+        <div class="hero-inner">
+            <div class="label fi">La solución</div>
+            <h1 class="hero-title fi d1">
+                Invierte en bolsa con<br>
+                <span class="hi">criterio propio.</span>
+            </h1>
+
+            <!-- VIDEO VSL -->
+            <div class="vsl-wrap fi d2">
+                <div class="vsl-box">
+                    <!--
+                        REEMPLAZA con tu embed de Bunny Stream o Vimeo:
+
+                        Bunny Stream:
+                        <iframe src="https://iframe.mediadelivery.net/embed/TU-LIBRARY-ID/TU-VIDEO-ID"
+                                loading="lazy"
+                                allow="accelerometer;gyroscope;autoplay;encrypted-media;picture-in-picture"
+                                allowfullscreen></iframe>
+
+                        Vimeo:
+                        <iframe src="https://player.vimeo.com/video/TU-ID?title=0&byline=0&portrait=0"
+                                allow="autoplay; fullscreen; picture-in-picture"
+                                allowfullscreen></iframe>
+                    -->
+                    <div class="vsl-ph">
+                        <div class="play">▶</div>
+                        <span>Tu video VSL va aquí — pega el embed de Bunny o Vimeo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-stats fi d3">
+                <div class="stat">
+                    <div class="stat-n">17K</div>
+                    <div class="stat-l">Seguidores Instagram</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-n">+70</div>
+                    <div class="stat-l">Miembros activos</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-n">100%</div>
+                    <div class="stat-l">En español</div>
+                </div>
+            </div>
+
+            <div class="hero-actions fi d4">
+                <a href="https://whop.com/diariolargoplazo/" class="btn btn-gold btn-gold-lg" target="_blank" rel="noopener">
+                    Obtener acceso al Club DLP
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#beneficios" class="btn btn-ghost">Ver qué incluye ↓</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span class="ti">META <span class="tg">▲ largo plazo</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">GOOGL <span class="tg">▲ largo plazo</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">MSFT <span class="tg">▲ largo plazo</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">ADBE</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">S&P 500</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">ETFs · Acciones · Portafolios</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">XLE <span class="tg">protección</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">XOM · CVX · OXY</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">Inversión con paciencia · Criterio · Visión</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">META <span class="tg">▲ largo plazo</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">GOOGL <span class="tg">▲ largo plazo</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">MSFT <span class="tg">▲ largo plazo</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">ADBE</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">S&P 500</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">ETFs · Acciones · Portafolios</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">XLE <span class="tg">protección</span></span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">XOM · CVX · OXY</span>
+        <span class="ti"><span class="sep"></span></span>
+        <span class="ti">Inversión con paciencia · Criterio · Visión</span>
+        <span class="ti"><span class="sep"></span></span>
+    </div>
+</div>
+
+<!-- BENEFICIOS -->
+<section id="beneficios">
+    <div class="container">
+        <div class="ben-intro fi">
+            <div class="label">Lo que obtienes</div>
+            <h2>Todo lo que incluye tu membresía</h2>
+            <p>Diseñado para que empieces a invertir con criterio desde el primer día — sin experiencia previa.</p>
+        </div>
+
+        <div class="ben-list">
+            <div class="ben-row fi">
+                <div class="ben-chk">✓</div>
+                <div class="ben-row-txt">
+                    <h3>Método de análisis de acciones</h3>
+                    <p>Aprende a leer los números de una empresa como lo haría un analista. Sin tecnicismos que excluyen, sin fórmulas imposibles.</p>
+                </div>
+            </div>
+            <div class="ben-row fi d1">
+                <div class="ben-chk">✓</div>
+                <div class="ben-row-txt">
+                    <h3>Análisis y noticias con contexto</h3>
+                    <p>No solo datos — cada actualización del mercado viene explicada para que sepas qué significa y qué hacer con eso.</p>
+                </div>
+            </div>
+            <div class="ben-row fi d2">
+                <div class="ben-chk">✓</div>
+                <div class="ben-row-txt">
+                    <h3>Apoyo 1:1 directo con José</h3>
+                    <p>Preguntas sobre tu portafolio, tu situación, tus dudas. Acceso directo incluido en tu membresía.</p>
+                </div>
+            </div>
+            <div class="ben-row fi d3">
+                <div class="ben-chk">✓</div>
+                <div class="ben-row-txt">
+                    <h3>Comunidad privada activa</h3>
+                    <p>Inversores reales con portafolios reales. Conversaciones de fondo, sin spam ni señales vacías.</p>
+                </div>
+            </div>
+            <div class="ben-row fi d4">
+                <div class="ben-chk">✓</div>
+                <div class="ben-row-txt">
+                    <h3>Llamadas grupales en vivo</h3>
+                    <p>Revisamos el mercado juntos, respondemos preguntas y analizamos oportunidades en tiempo real.</p>
+                </div>
+            </div>
+            <div class="ben-row fi d5">
+                <div class="ben-chk">✓</div>
+                <div class="ben-row-txt">
+                    <h3>Biblioteca + Club de libros DLP</h3>
+                    <p>Plantillas de Excel para valuación de empresas, informes mensuales y los mejores libros de inversión.</p>
+                </div>
+            </div>
+            <!-- bonus -->
+            <div class="ben-row ben-bonus-row fi">
+                <div class="ben-chk">★</div>
+                <div class="ben-row-txt">
+                    <h3>Bonus exclusivo: Top acciones analizadas 2026</h3>
+                    <p>Acceso inmediato al análisis de las mejores acciones identificadas para este año — el trabajo de un analista, en lenguaje simple.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PARA QUIÉN -->
+<section id="para-quien">
+    <div class="container">
+        <div class="sec-head fi">
+            <div class="label">¿Es para ti?</div>
+            <h2>Club DLP no es para todos</h2>
+            <p>Solo tiene sentido si estás listo para aprender a invertir en serio. Sin atajos.</p>
+        </div>
+
+        <div class="pq-grid">
+            <!-- SÍ -->
+            <div class="pq-card pq-yes fi">
+                <div class="pq-pill pq-pill-yes">Sí es para ti si...</div>
+                <ul class="pq-list">
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-yes">✓</span>
+                        Llevas tiempo siguiendo contenido de inversión y sabes que es hora de actuar de verdad
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-yes">✓</span>
+                        Tienes dinero en el banco perdiendo valor y quieres hacer algo inteligente con él
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-yes">✓</span>
+                        Quieres entender lo que haces — no depender de señales ni recomendaciones de nadie
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-yes">✓</span>
+                        Estás dispuesto a ser paciente — entiendes que la riqueza se construye despacio
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-yes">✓</span>
+                        Quieres pertenecer a una comunidad de personas que invierten en serio
+                    </li>
+                </ul>
+            </div>
+
+            <!-- NO -->
+            <div class="pq-card pq-no fi d1">
+                <div class="pq-pill pq-pill-no">No es para ti si...</div>
+                <ul class="pq-list">
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-no">✕</span>
+                        Buscas multiplicar tu dinero en semanas o encontrar la acción que "va a explotar"
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-no">✕</span>
+                        Quieres señales de compra y venta sin entender por qué
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-no">✕</span>
+                        No estás dispuesto a dedicar tiempo a aprender el proceso
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-no">✕</span>
+                        Esperas resultados garantizados o rendimientos prometidos de antemano
+                    </li>
+                    <li class="pq-item">
+                        <span class="pq-ico pq-ico-no">✕</span>
+                        Buscas asesoría financiera personalizada y regulada por un profesional certificado
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="pq-cta fi">
+            <p>...entonces <span class="hi">este es tu lugar.</span></p>
+            <a href="https://whop.com/diariolargoplazo/" class="btn btn-gold btn-gold-lg" target="_blank" rel="noopener">
+                Obtener acceso al Club DLP
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- JOSE -->
+<section id="jose">
+    <div class="container">
+        <div class="jose-grid">
+            <div class="jose-img-wrap fi">
+                <img src="assets/YT TEMPLATE.jpg" alt="José Silva - Diario Largo Plazo" class="jose-img">
+                <div class="jose-chip">✓ @diariolargoplazo</div>
+            </div>
+            <div class="jose-text fi d1">
+                <div class="label">Quién está detrás</div>
+                <h2>No soy un gurú de finanzas</h2>
+                <p>No vengo a venderte la fórmula mágica ni una forma rápida de hacer dinero. Si eso es lo que buscas, este no es tu lugar.</p>
+                <p>Soy <strong>José</strong>, el colombiano a cargo de <strong>@diariolargoplazo</strong> — una comunidad construida específicamente para que latinoamericanos e hispanohablantes aprendan a invertir en serio, sin necesitar un MBA ni adivinar el mercado.</p>
+                <p>Lo que hacemos en el Club es simple: análisis real de empresas, decisiones basadas en criterio, y paciencia como la estrategia más subestimada del mercado. Nada de ruido. Todo con propósito.</p>
+                <div class="jose-handles">
+                    <a href="https://instagram.com/diariolargoplazo" class="handle" target="_blank" rel="noopener">→ @diariolargoplazo</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIOS -->
+<section id="testimonios">
+    <div class="container">
+        <div class="sec-head fi">
+            <div class="label">Lo que dicen los miembros</div>
+            <h2>+70 inversores ya están dentro</h2>
+        </div>
+        <div class="test-grid">
+            <div class="test-card fi">
+                <div class="test-top">
+                    <div class="test-author">
+                        <div class="test-avatar">R</div>
+                        <h4>Ronald</h4>
+                    </div>
+                    <div class="test-stars">★★★★★</div>
+                </div>
+                <p class="test-text">"Increíble!!! Mil gracias por ofrecer su trabajo."</p>
+            </div>
+            <div class="test-card fi d1">
+                <div class="test-top">
+                    <div class="test-author">
+                        <div class="test-avatar">E</div>
+                        <h4>Edgar</h4>
+                    </div>
+                    <div class="test-stars">★★★★★</div>
+                </div>
+                <p class="test-text">"¡Excelente trabajo! Gracias por compartir su conocimiento y su dedicación. Además, ayudarnos a comprender mejor el camino de la inversión. Muchas gracias."</p>
+            </div>
+            <div class="test-card fi d2">
+                <div class="test-top">
+                    <div class="test-author">
+                        <div class="test-avatar">S</div>
+                        <h4>SamCuello</h4>
+                    </div>
+                    <div class="test-stars">★★★★★</div>
+                </div>
+                <p class="test-text">"El acompañamiento y el contenido es muy bueno y siempre hay soporte personalizado. Muy recomendado."</p>
+                <p class="test-date">Escrito 31 de marzo de 2026 · 4 días después de la compra</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PRECIO -->
+<section id="precio">
+    <div class="container">
+        <div class="precio-head fi">
+            <h2>El mejor momento para empezar<br>fue hace un año. <span class="hi">El segundo es hoy.</span></h2>
+            <p>Un precio. Todo incluido. Sin sorpresas.</p>
+        </div>
+        <div class="precio-card fi d1">
+            <div class="precio-img">
+                <img src="assets/YT TEMPLATE (11).jpg" alt="Club DLP">
+            </div>
+            <div class="precio-body">
+                <div class="precio-tag">Membresía Club DLP</div>
+                <h2>Todo lo que necesitas para invertir con criterio</h2>
+                <div class="amount"><sup>$</sup>37</div>
+                <p class="period">por mes · Cancela cuando quieras</p>
+
+                <div class="inc-list">
+                    <h4>Incluye</h4>
+                    <div class="inc-row"><div class="chk">✓</div><span>Comunidad privada de inversores</span></div>
+                    <div class="inc-row"><div class="chk">✓</div><span>Método de análisis de acciones + entrenamiento completo</span></div>
+                    <div class="inc-row"><div class="chk">✓</div><span>Análisis y noticias exclusivas con contexto</span></div>
+                    <div class="inc-row"><div class="chk">✓</div><span>Sesiones 1:1 con José (incluidas)</span></div>
+                    <div class="inc-row"><div class="chk">✓</div><span>Llamadas grupales y eventos en vivo</span></div>
+                    <div class="inc-row"><div class="chk">✓</div><span>Club de libros + biblioteca de recursos DLP</span></div>
+                    <div class="inc-row"><div class="chk chk-star">★</div><span class="gold-txt">Bonus: Top acciones analizadas 2026</span></div>
+                </div>
+
+                <a href="https://whop.com/diariolargoplazo/" class="btn-cta-precio" target="_blank" rel="noopener">
+                    Obtener acceso al Club DLP
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <p class="precio-note">Sin compromisos. Sin contratos. Cancela en cualquier momento.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+    <div class="container">
+        <div class="sec-head fi">
+            <div class="label">Preguntas frecuentes</div>
+            <h2>Resuelve tus dudas antes de entrar</h2>
+        </div>
+        <div class="faq-list">
+            <div class="faq-item fi">
+                <button class="faq-q">
+                    <h3>¿Necesito experiencia previa en inversiones?</h3>
+                    <span class="faq-ic">+</span>
+                </button>
+                <div class="faq-ans">
+                    <p>No. El Club está diseñado para llevarte de cero a analizar empresas por tu cuenta. El ritmo lo pones tú, y el método está estructurado para que cada paso tenga sentido antes de pasar al siguiente.</p>
+                </div>
+            </div>
+            <div class="faq-item fi d1">
+                <button class="faq-q">
+                    <h3>¿Cuánto dinero necesito para empezar a invertir?</h3>
+                    <span class="faq-ic">+</span>
+                </button>
+                <div class="faq-ans">
+                    <p>Puedes aprender desde el primer día sin invertir un centavo. Para empezar a operar, existen plataformas que permiten invertir desde $10 en acciones fraccionadas. Lo importante es el criterio, no la cantidad inicial.</p>
+                </div>
+            </div>
+            <div class="faq-item fi d2">
+                <button class="faq-q">
+                    <h3>¿Qué pasa si quiero cancelar?</h3>
+                    <span class="faq-ic">+</span>
+                </button>
+                <div class="faq-ans">
+                    <p>Cancela cuando quieras, sin preguntas ni penalizaciones. La membresía es mensual. Lo que aprendiste ya es tuyo para siempre.</p>
+                </div>
+            </div>
+            <div class="faq-item fi d3">
+                <button class="faq-q">
+                    <h3>¿Dan recomendaciones directas de compra o venta?</h3>
+                    <span class="faq-ic">+</span>
+                </button>
+                <div class="faq-ans">
+                    <p>No. En Club DLP no damos recomendaciones de inversión. Analizamos empresas y mercados con transparencia para que tú tomes tus propias decisiones. No creas dependencia — construyes criterio.</p>
+                </div>
+            </div>
+            <div class="faq-item fi d4">
+                <button class="faq-q">
+                    <h3>¿Funciona si estoy en México, Colombia, España u otro país?</h3>
+                    <span class="faq-ic">+</span>
+                </button>
+                <div class="faq-ans">
+                    <p>Sí. La comunidad es para todo el mundo hispanohablante. Cubrimos brokers disponibles en diferentes países y las explicaciones aplican sin importar desde dónde inviertas.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER CTA -->
+<div class="ft-cta">
+    <div class="container">
+        <h2 class="fi">¿Listo para invertir con criterio?</h2>
+        <p class="fi d1">Más de 70 inversores en español ya lo están haciendo.</p>
+        <a href="https://whop.com/diariolargoplazo/" class="btn btn-gold btn-gold-lg fi d2" target="_blank" rel="noopener">
+            Obtener acceso al Club DLP
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <div class="ft-inner">
+            <p>© 2026 Diario Largo Plazo. Todos los derechos reservados.</p>
+            <div class="ft-links">
+                <a href="https://instagram.com/diariolargoplazo" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://whop.com/diariolargoplazo/" target="_blank" rel="noopener">Unirme</a>
+            </div>
+        </div>
+        <div class="ft-legal">
+            <p>
+                <strong style="color:#4B5563">AVISO LEGAL Y DESCARGO DE RESPONSABILIDAD —</strong>
+                Todo el contenido publicado en esta página web, en la comunidad Club DLP y en los canales asociados de Diario Largo Plazo (@diariolargoplazo) tiene carácter exclusivamente educativo e informativo. No constituye, en ningún caso, asesoramiento financiero, de inversión, fiscal, legal ni de ningún otro tipo. Diario Largo Plazo no es un asesor de inversiones registrado ni un corredor de bolsa autorizado.
+            </p>
+            <p>
+                La información compartida no debe interpretarse como una recomendación para comprar, vender o mantener ningún activo financiero. Toda decisión de inversión conlleva riesgos, incluida la posible pérdida total del capital invertido. Los rendimientos pasados no garantizan resultados futuros. Antes de tomar cualquier decisión financiera, consulte con un profesional cualificado y regulado en su jurisdicción.
+            </p>
+            <p>
+                Los testimonios, resultados y experiencias de miembros mostrados en esta página son individuales y no representan resultados típicos ni garantizados. Los resultados varían según cada persona, su situación financiera, conocimientos y disciplina.
+            </p>
+            <p>
+                © 2026 Diario Largo Plazo. Todos los derechos reservados. Queda prohibida la reproducción total o parcial de cualquier contenido, imagen, texto o material de esta página sin autorización expresa y por escrito de José Silva / Diario Largo Plazo. Las marcas "Diario Largo Plazo", "DLP" y "Club DLP" son propiedad exclusiva de sus titulares.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+    }, { threshold: 0.08, rootMargin: '0px 0px -36px 0px' });
+    document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+    document.querySelectorAll('.faq-item').forEach(item => {
+        item.querySelector('.faq-q').addEventListener('click', () => {
+            const open = item.classList.contains('open');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+            if (!open) item.classList.add('open');
+        });
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+        a.addEventListener('click', e => {
+            const id = a.getAttribute('href');
+            if (id === '#') return;
+            e.preventDefault();
+            document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+</script>
+</body>
+</html>
