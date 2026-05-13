@@ -158,6 +158,28 @@
             .precio-body{padding:22px 18px 28px} .amount{font-size:52px}
         }
         @media(max-width:380px){.stat{padding:0 10px}}
+        /* Breathing bubble */
+        @keyframes breathe{0%,100%{transform:translate(-50%,-50%) scale(1);opacity:1}50%{transform:translate(-50%,-50%) scale(1.22);opacity:.7}}
+        .bubble{position:absolute;width:640px;height:640px;border-radius:50%;background:radial-gradient(ellipse at center,rgba(217,119,6,.13) 0%,rgba(30,58,95,.18) 40%,transparent 70%);top:48%;left:50%;transform:translate(-50%,-50%);animation:breathe 7s ease-in-out infinite;pointer-events:none;z-index:0;filter:blur(48px)}
+        /* Text shimmer */
+        @keyframes shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+        .hero-shimmer{background:linear-gradient(90deg,rgba(255,255,255,.75) 0%,#fff 30%,rgba(255,255,255,.92) 48%,rgba(180,200,255,.9) 50%,rgba(255,255,255,.92) 52%,#fff 70%,rgba(255,255,255,.75) 100%);background-size:250% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 3.5s linear infinite}
+        /* VSL enhanced */
+        @property --a{syntax:'<angle>';initial-value:0deg;inherits:false}
+        @keyframes border-spin{to{--a:360deg}}
+        .vsl-glow{position:relative;border-radius:22px;padding:2px;background:conic-gradient(from var(--a),rgba(217,119,6,.25) 0deg,rgba(217,119,6,.2) 280deg,rgba(255,190,40,.85) 305deg,rgba(255,255,255,.98) 318deg,rgba(255,190,40,.85) 331deg,rgba(217,119,6,.2) 355deg,rgba(217,119,6,.25) 360deg);animation:border-spin 4s linear infinite;box-shadow:0 0 28px rgba(217,119,6,.22),0 28px 60px rgba(0,0,0,.5)}
+        .vsl-box{border-radius:20px!important}
+        /* Rating */
+        .vsl-rating{display:flex;flex-direction:column;align-items:center;gap:5px;margin:18px 0 8px}
+        .stars{color:#F59E0B;font-size:22px;letter-spacing:3px}
+        .rating-line{font-size:13px;color:var(--text2);font-weight:600}
+        .rating-members{font-size:12px;color:var(--text3);margin-top:1px}
+        /* Cupos badge */
+        .cupos-badge{display:block;font-size:12px;color:var(--text3);font-style:italic;margin-top:10px;letter-spacing:.02em}
+        /* Firma */
+        .jose-firma{text-align:center;margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
+        .nos-vemos{font-size:15px;color:var(--text2);margin-bottom:8px}
+        .firma-nombre{font-family:Georgia,serif;font-size:26px;color:var(--text);font-style:italic;font-weight:400;letter-spacing:.01em}
     </style>
     <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -174,14 +196,22 @@
     </div>
 </nav>
 <section id="hero">
+    <div class="bubble"></div>
     <div class="container">
         <div class="hero-inner">
             <div class="label fi">La solución</div>
-            <h1 class="hero-title fi d1">Aprende a invertir en bolsa con<br><span class="hi">criterio propio.</span></h1>
+            <h1 class="hero-title fi d1"><span class="hero-shimmer">Aprende a invertir en bolsa con</span><br><span class="hi">criterio propio.</span></h1>
             <div class="vsl-wrap fi d2">
-                <div class="vsl-box">
-                    <iframe src="https://player.vimeo.com/video/1190816881?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen title="leadactualizado2"></iframe>
+                <div class="vsl-glow">
+                    <div class="vsl-box">
+                        <iframe src="https://player.vimeo.com/video/1190816881?title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen title="leadactualizado2"></iframe>
+                    </div>
                 </div>
+            </div>
+            <div class="vsl-rating fi">
+                <div class="stars">★★★★★</div>
+                <div class="rating-line">4,92 de 5 estrellas</div>
+                <div class="rating-members">Más de 80 miembros ya se han unido</div>
             </div>
             <div class="hero-stats fi d3">
                 <div class="stat"><div class="stat-n">17K</div><div class="stat-l">Seguidores Instagram</div></div>
@@ -191,6 +221,7 @@
             <div class="hero-actions fi d4">
                 <a href="https://whop.com/diariolargoplazo/membresia-dlp/" class="btn btn-gold btn-gold-lg" target="_blank" rel="noopener">Obtener acceso al Club DLP <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 <a href="#beneficios" class="btn btn-ghost">Ver qué incluye ↓</a>
+                <span class="cupos-badge">⚡ Cupos limitados</span>
             </div>
         </div>
     </div>
@@ -307,8 +338,12 @@
                     <div class="inc-row"><div class="chk">✓</div><span>Club de libros + biblioteca de recursos DLP</span></div>
                     <div class="inc-row"><div class="chk chk-star">★</div><span class="gold-txt">Bonus: Top acciones analizadas 2026</span></div>
                 </div>
-                <a href="https://whop.com/diariolargoplazo/membresia-dlp/" class="btn-cta-precio" target="_blank" rel="noopener">Obtener acceso al Club DLP <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                <a href="https://whop.com/diariolargoplazo/membresia-dlp/" class="btn-cta-precio" target="_blank" rel="noopener">Quiero aprender a dominar el mercado <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
                 <p class="precio-note">Sin compromisos. Sin contratos. Cancela en cualquier momento.</p>
+                <div class="jose-firma">
+                    <p class="nos-vemos">Nos vemos dentro,</p>
+                    <p class="firma-nombre">José</p>
+                </div>
             </div>
         </div>
     </div>
